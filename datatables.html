@@ -186,8 +186,12 @@
         }
         
         /* DataTables styling */
+        .dataTables_wrapper {
+            position: relative;
+        }
+        
         .dataTables_wrapper .dataTables_length {
-            float: left;
+            display: block;
             margin-bottom: 10px;
         }
         
@@ -210,18 +214,17 @@
         }
         
         .dataTables_wrapper .dataTables_info {
-            float: left;
-            clear: left;
-            padding-top: 8px;
+            display: block;
+            padding-top: 0;
             color: #666;
             font-weight: 500;
+            margin-bottom: 20px;
         }
         
         .dataTables_wrapper .dataTables_paginate {
-            float: none;
             text-align: center;
-            margin-top: -40px;
             margin-bottom: 20px;
+            order: -1;
         }
         
         .dataTables_wrapper .dataTables_paginate .paginate_button {
@@ -561,7 +564,7 @@
                     select: {
                         style: 'single'
                     },
-                    dom: 'lrtip',
+                    dom: '<"top"p>lirt<"clear">',
                     pageLength: 10,
                     language: {
                         lengthMenu: "_MENU_ entries per page",
