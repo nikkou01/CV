@@ -417,7 +417,7 @@
                     <label><input type="checkbox" class="toggle-vis" data-table="1" data-column="1" checked> Position</label>
                     <label><input type="checkbox" class="toggle-vis" data-table="1" data-column="2" checked> Office</label>
                     <label><input type="checkbox" class="toggle-vis" data-table="1" data-column="3" checked> Department</label>
-                    <label><input type="checkbox" class="toggle-vis" data-table="1" data-column="4" checked> Age</label>
+                    <label><input type="checkbox" class="toggle-vis" data-table="1" data-column="4" checked> Extension</label>
                     <label><input type="checkbox" class="toggle-vis" data-table="1" data-column="5" checked> Start Date</label>
                     <label><input type="checkbox" class="toggle-vis" data-table="1" data-column="6" checked> Salary</label>
                 </div>
@@ -429,7 +429,7 @@
                             <th>Position</th>
                             <th>Office</th>
                             <th>Department</th>
-                            <th>Age</th>
+                            <th>Extension</th>
                             <th>Start Date</th>
                             <th>Salary</th>
                         </tr>
@@ -438,7 +438,7 @@
                             <th><select class="filter-select" data-column="1"><option value="">All</option></select></th>
                             <th><select class="filter-select" data-column="2"><option value="">All</option></select></th>
                             <th><select class="filter-select" data-column="3"><option value="">All</option></select></th>
-                            <th><input type="text" placeholder="Search Age" /></th>
+                            <th><input type="text" placeholder="Search Extension" /></th>
                             <th><input type="text" placeholder="Search Date" /></th>
                             <th><input type="text" placeholder="Search Salary" /></th>
                         </tr>
@@ -458,7 +458,7 @@
                     <label><input type="checkbox" class="toggle-vis" data-table="2" data-column="1" checked> Position</label>
                     <label><input type="checkbox" class="toggle-vis" data-table="2" data-column="2" checked> Office</label>
                     <label><input type="checkbox" class="toggle-vis" data-table="2" data-column="3" checked> Department</label>
-                    <label><input type="checkbox" class="toggle-vis" data-table="2" data-column="4" checked> Age</label>
+                    <label><input type="checkbox" class="toggle-vis" data-table="2" data-column="4" checked> Extension</label>
                     <label><input type="checkbox" class="toggle-vis" data-table="2" data-column="5" checked> Start Date</label>
                     <label><input type="checkbox" class="toggle-vis" data-table="2" data-column="6" checked> Salary</label>
                 </div>
@@ -470,7 +470,7 @@
                             <th>Position</th>
                             <th>Office</th>
                             <th>Department</th>
-                            <th>Age</th>
+                            <th>Extension</th>
                             <th>Start Date</th>
                             <th>Salary</th>
                         </tr>
@@ -479,7 +479,7 @@
                             <th><select class="filter-select" data-column="1"><option value="">All</option></select></th>
                             <th><select class="filter-select" data-column="2"><option value="">All</option></select></th>
                             <th><select class="filter-select" data-column="3"><option value="">All</option></select></th>
-                            <th><input type="text" placeholder="Search Age" /></th>
+                            <th><input type="text" placeholder="Search Extension" /></th>
                             <th><input type="text" placeholder="Search Date" /></th>
                             <th><input type="text" placeholder="Search Salary" /></th>
                         </tr>
@@ -506,40 +506,35 @@
             function initDataTable(tableId) {
                 var table = $(tableId).DataTable({
                     ajax: {
-                        url: 'https://datatables.net/examples/ajax/data/objects.txt',
+                        url: 'https://datatables.net/examples/ajax/data/arrays.txt',
                         dataSrc: function(json) {
-                            // Transform the data to add department column and calculate age
-                            return json.data.map(function(item) {
-                                // Add department based on position
+                            // Transform array data to add department column for 7 total columns
+                            // Original format: [Name, Position, Office, Extension, Start Date, Salary]
+                            return json.data.map(function(row) {
+                                // Add department based on position (row[1])
                                 var department;
-                                if (item.position.includes('Engineer') || item.position.includes('Developer') || item.position.includes('Architect')) {
+                                if (row[1].includes('Engineer') || row[1].includes('Developer') || row[1].includes('Architect')) {
                                     department = 'Engineering';
-                                } else if (item.position.includes('Sales') || item.position.includes('Marketing')) {
+                                } else if (row[1].includes('Sales') || row[1].includes('Marketing')) {
                                     department = 'Sales & Marketing';
-                                } else if (item.position.includes('Officer') || item.position.includes('Executive')) {
+                                } else if (row[1].includes('Officer') || row[1].includes('Executive')) {
                                     department = 'Management';
-                                } else if (item.position.includes('Accountant') || item.position.includes('Financial')) {
+                                } else if (row[1].includes('Accountant') || row[1].includes('Financial')) {
                                     department = 'Finance';
                                 } else {
                                     department = 'Operations';
                                 }
                                 
-                                // Calculate age based on start_date (years of service)
-                                var startDate = new Date(item.start_date);
-                                var today = new Date();
-                                var yearsOfService = today.getFullYear() - startDate.getFullYear();
-                                // Generate a reasonable age (25-65) based on their ID
-                                var age = 25 + (parseInt(item.id) % 40);
-                                
-                                return {
-                                    name: item.name,
-                                    position: item.position,
-                                    office: item.office,
-                                    department: department,
-                                    age: age,
-                                    start_date: item.start_date,
-                                    salary: item.salary
-                                };
+                                // Return array with 7 columns: Name, Position, Office, Department, Extension, Start Date, Salary
+                                return [
+                                    row[0], // Name
+                                    row[1], // Position
+                                    row[2], // Office
+                                    department, // Department (new column)
+                                    row[3], // Extension
+                                    row[4], // Start Date
+                                    row[5]  // Salary
+                                ];
                             });
                         },
                         error: function(xhr, error, code) {
@@ -548,13 +543,13 @@
                         }
                     },
                     columns: [
-                        { data: "name" },
-                        { data: "position" },
-                        { data: "office" },
-                        { data: "department" },
-                        { data: "age", type: "num" },
-                        { data: "start_date" },
-                        { data: "salary" }
+                        { title: "Name" },
+                        { title: "Position" },
+                        { title: "Office" },
+                        { title: "Department" },
+                        { title: "Extension" },
+                        { title: "Start Date" },
+                        { title: "Salary" }
                     ],
                     select: {
                         style: 'single'
