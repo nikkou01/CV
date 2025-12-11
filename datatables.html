@@ -612,9 +612,20 @@
                 return table;
             }
             
-            // Initialize both tables
+            // Initialize table 1 immediately
             var table1 = initDataTable('#example1');
-            var table2 = initDataTable('#example2');
+            var table2 = null;
+            var table2Initialized = false;
+            
+            // Initialize table 2 when its tab is shown for the first time
+            $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
+                if (e.target.id === 'tab2-tab' && !table2Initialized) {
+                    table2 = initDataTable('#example2');
+                    table2Initialized = true;
+                }
+                // Adjust column widths when switching tabs
+                $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+            });
             
             // Delete selected row functionality for Table 1
             $('#deleteBtn1').on('click', function() {
@@ -630,13 +641,15 @@
             
             // Delete selected row functionality for Table 2
             $('#deleteBtn2').on('click', function() {
-                var selectedRow = table2.rows('.selected');
-                if (selectedRow.length > 0) {
-                    if (confirm('Are you sure you want to delete the selected row?')) {
-                        selectedRow.remove().draw(false); // false prevents page reset
+                if (table2) {
+                    var selectedRow = table2.rows('.selected');
+                    if (selectedRow.length > 0) {
+                        if (confirm('Are you sure you want to delete the selected row?')) {
+                            selectedRow.remove().draw(false); // false prevents page reset
+                        }
+                    } else {
+                        alert('Please select a row to delete');
                     }
-                } else {
-                    alert('Please select a row to delete');
                 }
             });
             
@@ -646,14 +659,11 @@
                 var column = $(this).data('column');
                 var table = tableNum === 1 ? table1 : table2;
                 
-                // Toggle the visibility
-                var col = table.column(column);
-                col.visible(!col.visible());
-            });
-            
-            // Reinitialize table when switching tabs to ensure proper rendering
-            $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
-                $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+                if (table) {
+                    // Toggle the visibility
+                    var col = table.column(column);
+                    col.visible(!col.visible());
+                }
             });
         });
     </script>
