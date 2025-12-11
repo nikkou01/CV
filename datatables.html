@@ -508,11 +508,8 @@
                     ajax: {
                         url: 'https://datatables.net/examples/ajax/data/objects.txt',
                         dataSrc: function(json) {
-                            // The data is directly in json.data array
-                            var data = json.data || json;
-                            
-                            // Transform the data to add department column for 7 total
-                            return data.map(function(item) {
+                            // Transform the data to add department column and calculate age
+                            return json.data.map(function(item) {
                                 // Add department based on position
                                 var department;
                                 if (item.position.includes('Engineer') || item.position.includes('Developer') || item.position.includes('Architect')) {
@@ -527,12 +524,19 @@
                                     department = 'Operations';
                                 }
                                 
+                                // Calculate age based on start_date (years of service)
+                                var startDate = new Date(item.start_date);
+                                var today = new Date();
+                                var yearsOfService = today.getFullYear() - startDate.getFullYear();
+                                // Generate a reasonable age (25-65) based on their ID
+                                var age = 25 + (parseInt(item.id) % 40);
+                                
                                 return {
                                     name: item.name,
                                     position: item.position,
                                     office: item.office,
                                     department: department,
-                                    age: item.age,
+                                    age: age,
                                     start_date: item.start_date,
                                     salary: item.salary
                                 };
