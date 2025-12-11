@@ -506,7 +506,7 @@
             function initDataTable(tableId) {
                 var table = $(tableId).DataTable({
                     ajax: {
-                        url: 'https://corsproxy.io/?https://datatables.net/examples/ajax/data/arrays.txt',
+                        url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://datatables.net/examples/ajax/data/arrays.txt'),
                         type: 'GET',
                         dataType: 'json',
                         dataSrc: function(json) {
