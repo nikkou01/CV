@@ -502,48 +502,78 @@
     
     <script>
         $(document).ready(function() {
+            // Employee data
+            var employeeData = [
+                ["Airi Satou", "Accountant", "Tokyo", "Finance", "33", "2008/11/28", "$162,700"],
+                ["Angelica Ramos", "Chief Executive Officer (CEO)", "London", "Management", "47", "2009/10/09", "$1,200,000"],
+                ["Ashton Cox", "Junior Technical Author", "San Francisco", "Engineering", "66", "2009/01/12", "$86,000"],
+                ["Bradley Greer", "Software Engineer", "London", "Engineering", "41", "2012/10/13", "$132,000"],
+                ["Brenden Wagner", "Software Engineer", "San Francisco", "Engineering", "28", "2011/06/07", "$206,850"],
+                ["Brielle Williamson", "Integration Specialist", "New York", "Operations", "61", "2012/12/02", "$372,000"],
+                ["Bruno Nash", "Software Engineer", "London", "Engineering", "38", "2011/05/03", "$163,500"],
+                ["Caesar Vance", "Pre-Sales Support", "New York", "Sales & Marketing", "21", "2011/12/12", "$106,450"],
+                ["Cara Stevens", "Sales Assistant", "New York", "Sales & Marketing", "46", "2011/12/06", "$145,600"],
+                ["Cedric Kelly", "Senior Javascript Developer", "Edinburgh", "Engineering", "22", "2012/03/29", "$433,060"],
+                ["Charde Marshall", "Regional Director", "San Francisco", "Management", "36", "2008/10/16", "$470,600"],
+                ["Colleen Hurst", "Javascript Developer", "San Francisco", "Engineering", "39", "2009/09/15", "$205,500"],
+                ["Dai Rios", "Personnel Lead", "Edinburgh", "Operations", "35", "2012/09/26", "$217,500"],
+                ["Donna Snider", "Customer Support", "New York", "Operations", "27", "2011/01/25", "$112,000"],
+                ["Doris Wilder", "Sales Assistant", "Sydney", "Sales & Marketing", "23", "2010/09/20", "$85,600"],
+                ["Finn Camacho", "Support Engineer", "San Francisco", "Engineering", "47", "2009/07/07", "$87,500"],
+                ["Fiona Green", "Chief Operating Officer (COO)", "San Francisco", "Management", "48", "2010/03/11", "$850,000"],
+                ["Garrett Winters", "Accountant", "Tokyo", "Finance", "63", "2011/07/25", "$170,750"],
+                ["Gavin Cortez", "Team Leader", "San Francisco", "Management", "22", "2008/10/26", "$235,500"],
+                ["Gavin Joyce", "Developer", "Edinburgh", "Engineering", "42", "2010/12/22", "$92,575"],
+                ["Gloria Little", "Systems Administrator", "New York", "Engineering", "59", "2009/04/10", "$237,500"],
+                ["Haley Kennedy", "Senior Marketing Designer", "London", "Sales & Marketing", "43", "2012/12/18", "$313,500"],
+                ["Hermione Butler", "Regional Director", "London", "Management", "47", "2011/03/21", "$356,250"],
+                ["Herrod Chandler", "Sales Assistant", "San Francisco", "Sales & Marketing", "59", "2012/08/06", "$137,500"],
+                ["Hope Fuentes", "Secretary", "San Francisco", "Operations", "41", "2010/02/12", "$109,850"],
+                ["Howard Hatfield", "Office Manager", "San Francisco", "Operations", "51", "2008/12/16", "$164,500"],
+                ["Jackson Bradshaw", "Director", "New York", "Management", "65", "2008/09/26", "$645,750"],
+                ["Jena Gaines", "Office Manager", "London", "Operations", "30", "2008/12/19", "$90,560"],
+                ["Jenette Caldwell", "Development Lead", "New York", "Engineering", "30", "2011/09/03", "$345,000"],
+                ["Jennifer Acosta", "Junior Javascript Developer", "Edinburgh", "Engineering", "43", "2013/02/01", "$75,650"],
+                ["Jennifer Chang", "Regional Director", "Singapore", "Management", "28", "2010/11/14", "$357,650"],
+                ["Jonas Alexander", "Developer", "San Francisco", "Engineering", "30", "2010/07/14", "$86,500"],
+                ["Lael Greer", "Systems Administrator", "London", "Engineering", "21", "2009/02/27", "$103,500"],
+                ["Martena Mccray", "Post-Sales support", "Edinburgh", "Operations", "46", "2011/03/09", "$324,050"],
+                ["Michael Silva", "Marketing Designer", "London", "Sales & Marketing", "66", "2012/11/27", "$198,500"],
+                ["Michelle House", "Integration Specialist", "Sydney", "Operations", "37", "2011/06/02", "$95,400"],
+                ["Olivia Liang", "Support Engineer", "Singapore", "Engineering", "64", "2011/02/03", "$234,500"],
+                ["Paul Byrd", "Chief Financial Officer (CFO)", "New York", "Management", "64", "2010/06/09", "$725,000"],
+                ["Prescott Bartlett", "Technical Author", "London", "Engineering", "27", "2011/05/07", "$145,000"],
+                ["Quinn Flynn", "Support Lead", "Edinburgh", "Operations", "22", "2013/03/03", "$342,000"],
+                ["Rhona Davidson", "Integration Specialist", "Tokyo", "Operations", "55", "2010/10/14", "$327,900"],
+                ["Sakura Yamamoto", "Support Engineer", "Tokyo", "Engineering", "37", "2009/08/19", "$139,575"],
+                ["Serge Baldwin", "Data Coordinator", "Singapore", "Operations", "64", "2012/04/09", "$138,575"],
+                ["Shad Decker", "Regional Director", "Edinburgh", "Management", "51", "2008/11/13", "$183,000"],
+                ["Shou Itou", "Regional Marketing", "Tokyo", "Sales & Marketing", "20", "2011/08/14", "$163,000"],
+                ["Sonya Frost", "Software Engineer", "Edinburgh", "Engineering", "23", "2008/12/13", "$103,600"],
+                ["Suki Burks", "Developer", "London", "Engineering", "53", "2009/10/22", "$114,500"],
+                ["Tatyana Fitzpatrick", "Regional Director", "London", "Management", "19", "2010/03/17", "$385,750"],
+                ["Thor Walton", "Developer", "New York", "Engineering", "61", "2013/08/11", "$98,540"],
+                ["Tiger Nixon", "System Architect", "Edinburgh", "Engineering", "61", "2011/04/25", "$320,800"],
+                ["Timothy Mooney", "Office Manager", "London", "Operations", "37", "2008/12/11", "$136,200"],
+                ["Unity Butler", "Marketing Designer", "San Francisco", "Sales & Marketing", "47", "2009/12/09", "$85,675"],
+                ["Vivian Harrell", "Financial Controller", "San Francisco", "Finance", "62", "2009/02/14", "$452,500"],
+                ["Yuri Berry", "Chief Marketing Officer (CMO)", "New York", "Management", "40", "2009/06/25", "$675,000"],
+                ["Zenaida Frank", "Software Engineer", "New York", "Engineering", "63", "2010/01/04", "$125,250"],
+                ["Zorita Serrano", "Software Engineer", "San Francisco", "Engineering", "56", "2012/06/01", "$115,000"]
+            ];
+            
             // Common DataTable configuration
             function initDataTable(tableId) {
                 var table = $(tableId).DataTable({
-                    ajax: {
-                        url: 'https://datatables.net/examples/ajax/data/objects.txt',
-                        dataSrc: function(json) {
-                            // Transform the data to add department column for 7 total
-                            return json.data.map(function(item) {
-                                // Add department based on position
-                                var department;
-                                if (item.position.includes('Engineer') || item.position.includes('Developer') || item.position.includes('Architect')) {
-                                    department = 'Engineering';
-                                } else if (item.position.includes('Sales') || item.position.includes('Marketing')) {
-                                    department = 'Sales & Marketing';
-                                } else if (item.position.includes('Officer') || item.position.includes('Executive')) {
-                                    department = 'Management';
-                                } else if (item.position.includes('Accountant') || item.position.includes('Financial')) {
-                                    department = 'Finance';
-                                } else {
-                                    department = 'Operations';
-                                }
-                                
-                                return {
-                                    name: item.name,
-                                    position: item.position,
-                                    office: item.office,
-                                    department: department,
-                                    age: item.age,
-                                    start_date: item.start_date,
-                                    salary: item.salary
-                                };
-                            });
-                        }
-                    },
+                    data: employeeData,
                     columns: [
-                        { data: "name", title: "Name" },
-                        { data: "position", title: "Position" },
-                        { data: "office", title: "Office" },
-                        { data: "department", title: "Department" },
-                        { data: "age", title: "Age" },
-                        { data: "start_date", title: "Start Date" },
-                        { data: "salary", title: "Salary" }
+                        { title: "Name" },
+                        { title: "Position" },
+                        { title: "Office" },
+                        { title: "Department" },
+                        { title: "Age" },
+                        { title: "Start Date" },
+                        { title: "Salary" }
                     ],
                     select: {
                         style: 'single'
