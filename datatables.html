@@ -541,7 +541,12 @@
                         },
                         error: function(xhr, error, code) {
                             console.error('Error loading data:', error, xhr);
-                            alert('Failed to load data. Please check your internet connection.');
+                            // Silently retry without showing error to user
+                            setTimeout(function() {
+                                if (table) {
+                                    table.ajax.reload(null, false);
+                                }
+                            }, 2000);
                         }
                     },
                     columns: [
