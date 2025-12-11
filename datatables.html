@@ -621,7 +621,7 @@
                 var selectedRow = table1.rows('.selected');
                 if (selectedRow.length > 0) {
                     if (confirm('Are you sure you want to delete the selected row?')) {
-                        selectedRow.remove().draw();
+                        selectedRow.remove().draw(false); // false prevents page reset
                     }
                 } else {
                     alert('Please select a row to delete');
@@ -633,7 +633,7 @@
                 var selectedRow = table2.rows('.selected');
                 if (selectedRow.length > 0) {
                     if (confirm('Are you sure you want to delete the selected row?')) {
-                        selectedRow.remove().draw();
+                        selectedRow.remove().draw(false); // false prevents page reset
                     }
                 } else {
                     alert('Please select a row to delete');
