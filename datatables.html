@@ -529,21 +529,25 @@
                                     position: item.position,
                                     office: item.office,
                                     department: department,
-                                    age: item.age,
+                                    age: parseInt(item.age) || 0,
                                     start_date: item.start_date,
                                     salary: item.salary
                                 };
                             });
+                        },
+                        error: function(xhr, error, code) {
+                            console.error('Error loading data:', error);
+                            alert('Failed to load data. Please check your internet connection.');
                         }
                     },
                     columns: [
-                        { data: "name", title: "Name" },
-                        { data: "position", title: "Position" },
-                        { data: "office", title: "Office" },
-                        { data: "department", title: "Department" },
-                        { data: "age", title: "Age" },
-                        { data: "start_date", title: "Start Date" },
-                        { data: "salary", title: "Salary" }
+                        { data: "name" },
+                        { data: "position" },
+                        { data: "office" },
+                        { data: "department" },
+                        { data: "age", type: "num" },
+                        { data: "start_date" },
+                        { data: "salary" }
                     ],
                     select: {
                         style: 'single'
