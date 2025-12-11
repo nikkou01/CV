@@ -224,7 +224,15 @@
         .dataTables_wrapper .dataTables_paginate {
             text-align: center;
             margin-bottom: 20px;
-            order: -1;
+        }
+        
+        .dataTables_wrapper .top {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .dataTables_wrapper .bottom {
+            margin-top: 20px;
         }
         
         .dataTables_wrapper .dataTables_paginate .paginate_button {
@@ -564,7 +572,7 @@
                     select: {
                         style: 'single'
                     },
-                    dom: '<"top"p>lirt<"clear">',
+                    dom: '<"top"p>t<"bottom"li><"clear">',
                     pageLength: 10,
                     language: {
                         lengthMenu: "_MENU_ entries per page",
