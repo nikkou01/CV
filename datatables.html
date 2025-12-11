@@ -506,7 +506,7 @@
             function initDataTable(tableId) {
                 var table = $(tableId).DataTable({
                     ajax: {
-                        url: 'https://raw.githubusercontent.com/DataTables/DataTables/master/examples/ajax/data/objects.txt',
+                        url: 'https://datatables.net/examples/ajax/data/objects.txt',
                         dataSrc: function(json) {
                             // Transform the data to add department column for 7 total
                             return json.data.map(function(item) {
