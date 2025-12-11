@@ -506,9 +506,8 @@
             function initDataTable(tableId) {
                 var table = $(tableId).DataTable({
                     ajax: {
-                        url: 'https://datatables.net/examples/ajax/data/arrays.txt',
+                        url: 'https://corsproxy.io/?https://datatables.net/examples/ajax/data/arrays.txt',
                         type: 'GET',
-                        crossDomain: true,
                         dataType: 'json',
                         dataSrc: function(json) {
                             // Transform array data to add department column for 7 total columns
