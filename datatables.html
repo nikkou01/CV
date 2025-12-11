@@ -119,33 +119,33 @@
                 <div class="column-toggle mb-3">
                     <strong>Toggle Columns:</strong><br>
                     <label><input type="checkbox" class="toggle-vis" data-table="1" data-column="0" checked> ID</label>
-                    <label><input type="checkbox" class="toggle-vis" data-table="1" data-column="1" checked> Name</label>
-                    <label><input type="checkbox" class="toggle-vis" data-table="1" data-column="2" checked> Username</label>
+                    <label><input type="checkbox" class="toggle-vis" data-table="1" data-column="1" checked> Post ID</label>
+                    <label><input type="checkbox" class="toggle-vis" data-table="1" data-column="2" checked> Subject</label>
                     <label><input type="checkbox" class="toggle-vis" data-table="1" data-column="3" checked> Email</label>
-                    <label><input type="checkbox" class="toggle-vis" data-table="1" data-column="4" checked> City</label>
-                    <label><input type="checkbox" class="toggle-vis" data-table="1" data-column="5" checked> Company</label>
-                    <label><input type="checkbox" class="toggle-vis" data-table="1" data-column="6" checked> Phone</label>
+                    <label><input type="checkbox" class="toggle-vis" data-table="1" data-column="4" checked> Domain</label>
+                    <label><input type="checkbox" class="toggle-vis" data-table="1" data-column="5" checked> Category</label>
+                    <label><input type="checkbox" class="toggle-vis" data-table="1" data-column="6" checked> Comment Preview</label>
                 </div>
                 
                 <table id="example1" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
-                            <th>Username</th>
+                            <th>Post ID</th>
+                            <th>Subject</th>
                             <th>Email</th>
-                            <th>City</th>
-                            <th>Company</th>
-                            <th>Phone</th>
+                            <th>Domain</th>
+                            <th>Category</th>
+                            <th>Comment Preview</th>
                         </tr>
                         <tr class="column-search-row">
                             <th><input type="text" placeholder="Search ID" /></th>
-                            <th><input type="text" placeholder="Search Name" /></th>
-                            <th><input type="text" placeholder="Search Username" /></th>
+                            <th><input type="text" placeholder="Search Post ID" /></th>
+                            <th><input type="text" placeholder="Search Subject" /></th>
                             <th><input type="text" placeholder="Search Email" /></th>
-                            <th><input type="text" placeholder="Search City" /></th>
-                            <th><input type="text" placeholder="Search Company" /></th>
-                            <th><input type="text" placeholder="Search Phone" /></th>
+                            <th><input type="text" placeholder="Search Domain" /></th>
+                            <th><input type="text" placeholder="Search Category" /></th>
+                            <th><input type="text" placeholder="Search Comment" /></th>
                         </tr>
                     </thead>
                 </table>
@@ -160,33 +160,33 @@
                 <div class="column-toggle mb-3">
                     <strong>Toggle Columns:</strong><br>
                     <label><input type="checkbox" class="toggle-vis" data-table="2" data-column="0" checked> ID</label>
-                    <label><input type="checkbox" class="toggle-vis" data-table="2" data-column="1" checked> Name</label>
-                    <label><input type="checkbox" class="toggle-vis" data-table="2" data-column="2" checked> Username</label>
+                    <label><input type="checkbox" class="toggle-vis" data-table="2" data-column="1" checked> Post ID</label>
+                    <label><input type="checkbox" class="toggle-vis" data-table="2" data-column="2" checked> Subject</label>
                     <label><input type="checkbox" class="toggle-vis" data-table="2" data-column="3" checked> Email</label>
-                    <label><input type="checkbox" class="toggle-vis" data-table="2" data-column="4" checked> City</label>
-                    <label><input type="checkbox" class="toggle-vis" data-table="2" data-column="5" checked> Company</label>
-                    <label><input type="checkbox" class="toggle-vis" data-table="2" data-column="6" checked> Phone</label>
+                    <label><input type="checkbox" class="toggle-vis" data-table="2" data-column="4" checked> Domain</label>
+                    <label><input type="checkbox" class="toggle-vis" data-table="2" data-column="5" checked> Category</label>
+                    <label><input type="checkbox" class="toggle-vis" data-table="2" data-column="6" checked> Comment Preview</label>
                 </div>
                 
                 <table id="example2" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
-                            <th>Username</th>
+                            <th>Post ID</th>
+                            <th>Subject</th>
                             <th>Email</th>
-                            <th>City</th>
-                            <th>Company</th>
-                            <th>Phone</th>
+                            <th>Domain</th>
+                            <th>Category</th>
+                            <th>Comment Preview</th>
                         </tr>
                         <tr class="column-search-row">
                             <th><input type="text" placeholder="Search ID" /></th>
-                            <th><input type="text" placeholder="Search Name" /></th>
-                            <th><input type="text" placeholder="Search Username" /></th>
+                            <th><input type="text" placeholder="Search Post ID" /></th>
+                            <th><input type="text" placeholder="Search Subject" /></th>
                             <th><input type="text" placeholder="Search Email" /></th>
-                            <th><input type="text" placeholder="Search City" /></th>
-                            <th><input type="text" placeholder="Search Company" /></th>
-                            <th><input type="text" placeholder="Search Phone" /></th>
+                            <th><input type="text" placeholder="Search Domain" /></th>
+                            <th><input type="text" placeholder="Search Category" /></th>
+                            <th><input type="text" placeholder="Search Comment" /></th>
                         </tr>
                     </thead>
                 </table>
@@ -211,30 +211,34 @@
             function initDataTable(tableId) {
                 var table = $(tableId).DataTable({
                     ajax: {
-                        url: 'https://jsonplaceholder.typicode.com/users',
+                        url: 'https://jsonplaceholder.typicode.com/comments',
                         dataSrc: function(json) {
-                            // Transform the data to add extra columns
-                            return json.map(function(user) {
+                            // Transform the data to create 7 columns from comments data
+                            return json.map(function(item, index) {
+                                // Extract domain from email
+                                var domain = item.email.split('@')[1] || 'unknown.com';
+                                var category = ['Support', 'Sales', 'Technical', 'General', 'Feedback'][index % 5];
+                                
                                 return {
-                                    id: user.id,
-                                    name: user.name,
-                                    username: user.username,
-                                    email: user.email,
-                                    city: user.address.city,
-                                    company: user.company.name,
-                                    phone: user.phone
+                                    id: item.id,
+                                    postId: item.postId,
+                                    name: item.name,
+                                    email: item.email,
+                                    domain: domain,
+                                    category: category,
+                                    body: item.body.substring(0, 50) + '...'
                                 };
                             });
                         }
                     },
                     columns: [
                         { data: "id", title: "ID" },
-                        { data: "name", title: "Name" },
-                        { data: "username", title: "Username" },
+                        { data: "postId", title: "Post ID" },
+                        { data: "name", title: "Subject" },
                         { data: "email", title: "Email" },
-                        { data: "city", title: "City" },
-                        { data: "company", title: "Company" },
-                        { data: "phone", title: "Phone" }
+                        { data: "domain", title: "Domain" },
+                        { data: "category", title: "Category" },
+                        { data: "body", title: "Comment Preview" }
                     ],
                     select: {
                         style: 'single'
