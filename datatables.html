@@ -508,8 +508,11 @@
                     ajax: {
                         url: 'https://datatables.net/examples/ajax/data/objects.txt',
                         dataSrc: function(json) {
+                            // The data is directly in json.data array
+                            var data = json.data || json;
+                            
                             // Transform the data to add department column for 7 total
-                            return json.data.map(function(item) {
+                            return data.map(function(item) {
                                 // Add department based on position
                                 var department;
                                 if (item.position.includes('Engineer') || item.position.includes('Developer') || item.position.includes('Architect')) {
@@ -536,7 +539,7 @@
                             });
                         },
                         error: function(xhr, error, code) {
-                            console.error('Error loading data:', error);
+                            console.error('Error loading data:', error, xhr);
                             alert('Failed to load data. Please check your internet connection.');
                         }
                     },
